@@ -2,7 +2,7 @@
 
 ## Business Understanding
 
-Jaya Jaya Institut merupakan institusi pendidikan tinggi yang telah berdiri sejak tahun 2000 dan memiliki ribuan mahasiswa aktif di berbagai program studi. Meskipun telah mencetak banyak lulusan berkualitas, institusi menghadapi tantangan serius berupa tingginya angka **dropout** yang mencapai lebih dari 30% dari total mahasiswa yang memiliki status akhir (tidak termasuk yang masih aktif/enrolled).
+Jaya Jaya Institut merupakan institusi pendidikan tinggi yang telah berdiri sejak tahun 2000 dan memiliki ribuan mahasiswa aktif di berbagai program studi. Meskipun telah mencetak banyak lulusan berkualitas, institusi menghadapi tantangan serius berupa tingginya angka **dropout** yang mencapai **39.15%** dari total mahasiswa yang memiliki status akhir (tidak termasuk yang masih aktif/enrolled).
 
 Angka dropout yang tinggi berdampak langsung pada:
 - **Reputasi dan akreditasi institusi** yang bergantung pada tingkat kelulusan mahasiswa
@@ -104,25 +104,24 @@ Berdasarkan analisis data dan model machine learning yang telah dibangun, dapat 
 
 ### Temuan Utama
 
-1. **Dropout Rate Aktual**: Jaya Jaya Institut memiliki dropout rate sekitar **32%** dari total siswa (setelah mengecualikan siswa yang masih enrolled), yang merupakan angka cukup tinggi dan perlu segera ditangani.
+1. **Dropout Rate Aktual**: Dari 3.630 mahasiswa yang memiliki status akhir (Dropout atau Graduate), sebanyak **39.15%** (1.421 mahasiswa) mengalami dropout. Angka ini jauh lebih tinggi dari yang diperkirakan dan menjadi urgensi utama untuk segera ditangani.
 
-2. **Faktor-Faktor Utama Penyebab Dropout**:
-   - **Performa Akademik Semester 2**: Jumlah mata kuliah yang disetujui (approved) dan nilai (grade) semester 2 adalah prediktor terkuat. Siswa dengan nilai rendah di semester 2 sangat berisiko dropout.
-   - **Performa Akademik Semester 1**: Sama halnya dengan semester 2, performa semester 1 yang buruk menjadi tanda awal risiko dropout.
-   - **Status Pembayaran Uang Kuliah (Tuition_fees_up_to_date)**: Siswa yang tidak membayar uang kuliah tepat waktu memiliki risiko dropout jauh lebih tinggi.
-   - **Usia saat Pendaftaran (Age_at_enrollment)**: Siswa yang mendaftar di usia lebih tua cenderung lebih rentan dropout, kemungkinan karena harus menyeimbangkan pekerjaan dan pendidikan.
-   - **Status Beasiswa (Scholarship_holder)**: Penerima beasiswa memiliki dropout rate yang lebih rendah, menunjukkan bahwa dukungan finansial berperan penting.
-   - **Status Debtor**: Siswa yang memiliki hutang pada institusi memiliki risiko dropout lebih tinggi.
-   - **Kualifikasi Sebelumnya**: Siswa dengan kualifikasi akademik sebelumnya yang lebih rendah cenderung lebih sulit mengikuti perkuliahan.
+2. **Faktor-Faktor Utama Penyebab Dropout** (berdasarkan feature importance Gradient Boosting):
+   - **Performa Akademik Semester 2**: Jumlah mata kuliah yang disetujui (`Curricular_units_2nd_sem_approved`) dan nilai rata-rata semester 2 (`Curricular_units_2nd_sem_grade`) adalah prediktor terkuat. Mahasiswa dengan 0 mata kuliah lulus di semester 2 hampir pasti dropout.
+   - **Performa Akademik Semester 1**: Performa buruk di semester 1 menjadi sinyal awal risiko dropout yang dapat dideteksi sejak dini.
+   - **Status Pembayaran Uang Kuliah (`Tuition_fees_up_to_date`)**: Mahasiswa yang tidak membayar uang kuliah tepat waktu memiliki risiko dropout jauh lebih tinggi.
+   - **Usia saat Pendaftaran (`Age_at_enrollment`)**: Mahasiswa yang mendaftar di usia lebih tua (>25 tahun) lebih rentan dropout karena harus menyeimbangkan pekerjaan dan pendidikan.
+   - **Status Beasiswa (`Scholarship_holder`)**: Penerima beasiswa memiliki dropout rate lebih rendah, menunjukkan bahwa dukungan finansial berperan penting dalam retensi mahasiswa.
+   - **Status Debtor**: Mahasiswa dengan hutang kepada institusi memiliki risiko dropout lebih tinggi.
 
 3. **Performa Model Machine Learning**:
    | Model | Accuracy | ROC-AUC | F1-Score (Dropout) |
    |-------|----------|---------|-------------------|
-   | Logistic Regression | ~78% | ~0.84 | ~0.72 |
-   | Random Forest | ~85% | ~0.91 | ~0.80 |
-   | Gradient Boosting | **~87%** | **~0.93** | **~0.83** |
+   | Logistic Regression | 92.84% | 0.9731 | 0.9097 |
+   | Random Forest | 92.01% | 0.9689 | 0.8972 |
+   | Gradient Boosting | **92.84%** | **0.9744** | **0.9091** |
 
-   Model terbaik yang dipilih adalah **Gradient Boosting Classifier**.
+   Model terbaik yang dipilih adalah **Gradient Boosting Classifier** dengan ROC-AUC **0.9744** - artinya model mampu membedakan mahasiswa yang akan dropout vs graduate dengan akurasi sangat tinggi.
 
 ## Rekomendasi Action Items
 
