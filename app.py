@@ -17,13 +17,51 @@ st.set_page_config(
 # ============================================================
 # Load Model
 # ============================================================
+def _train_and_save(model_path: str):
+    """Train model dari scratch jika pkl tidak bisa diload."""
+    import pandas as pd
+    from sklearn.model_selection import train_test_split
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.ensemble import GradientBoostingClassifier
+    from sklearn.pipeline import Pipeline
+    from imblearn.over_sampling import SMOTE
+
+    DATA_URL = (
+        'https://raw.githubusercontent.com/dicodingacademy/dicoding_dataset'
+        '/main/students_performance/data.csv'
+    )
+    df = pd.read_csv(DATA_URL, sep=';').dropna(subset=['Status'])
+    df = df[df['Status'].isin(['Dropout', 'Graduate'])].copy()
+    df['Target'] = (df['Status'] == 'Dropout').astype(int)
+
+    X = df.drop(columns=['Status', 'Target'])
+    y = df['Target']
+
+    X_train, _, y_train, _ = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+    X_train_res, y_train_res = SMOTE(random_state=42).fit_resample(X_train, y_train)
+
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X_train_res)
+
+    model = GradientBoostingClassifier(
+        n_estimators=100, learning_rate=0.1,
+        max_depth=4, subsample=0.8, random_state=42
+    )
+    model.fit(X_scaled, y_train_res)
+
+    os.makedirs(os.path.dirname(model_path), exist_ok=True)
+    joblib.dump(Pipeline([('scaler', scaler), ('model', model)]), model_path)
+    return joblib.load(model_path)
+
+
 @st.cache_resource
 def load_model():
     model_path = os.path.join(os.path.dirname(__file__), 'model', 'best_model.pkl')
-    if not os.path.exists(model_path):
-        st.error("Model tidak ditemukan. Jalankan notebook.ipynb terlebih dahulu.")
-        st.stop()
-    return joblib.load(model_path)
+    try:
+        return joblib.load(model_path)
+    except Exception:
+        with st.spinner("Melatih model untuk pertama kali, harap tunggu (~1 menit)..."):
+            return _train_and_save(model_path)
 
 
 model = load_model()
