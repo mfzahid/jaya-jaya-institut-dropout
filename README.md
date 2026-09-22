@@ -75,7 +75,7 @@ Dashboard menampilkan:
 
 Prototype machine learning telah di-deploy pada Streamlit Community Cloud dan dapat diakses melalui:
 
-**Link Prototype**: [https://jaya-jaya-institut-dropout.streamlit.app](https://jaya-jaya-institut-dropout.streamlit.app)
+**Link Prototype**: [https://jaya-jaya-institut-dropout-gowi9aotfsesjwmq9j3pnv.streamlit.app](https://jaya-jaya-institut-dropout-gowi9aotfsesjwmq9j3pnv.streamlit.app)
 
 Untuk menjalankan secara lokal:
 
