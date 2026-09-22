@@ -2,23 +2,37 @@
 
 ## Business Understanding
 
-Jaya Jaya Institut merupakan salah satu institusi pendidikan perguruan yang telah berdiri sejak tahun 2000. Hingga saat ini ia telah mencetak banyak lulusan dengan reputasi yang sangat baik. Akan tetapi, terdapat banyak juga siswa yang tidak menyelesaikan pendidikannya alias **dropout**.
+Jaya Jaya Institut merupakan institusi pendidikan tinggi yang telah berdiri sejak tahun 2000 dan memiliki ribuan mahasiswa aktif di berbagai program studi. Meskipun telah mencetak banyak lulusan berkualitas, institusi menghadapi tantangan serius berupa tingginya angka **dropout** yang mencapai lebih dari 30% dari total mahasiswa yang memiliki status akhir (tidak termasuk yang masih aktif/enrolled).
 
-Jumlah dropout yang tinggi ini tentunya menjadi salah satu masalah yang besar untuk sebuah institusi pendidikan. Oleh karena itu, Jaya Jaya Institut ingin mendeteksi secepat mungkin siswa yang mungkin akan melakukan dropout sehingga dapat diberi bimbingan khusus.
+Angka dropout yang tinggi berdampak langsung pada:
+- **Reputasi dan akreditasi institusi** yang bergantung pada tingkat kelulusan mahasiswa
+- **Kerugian finansial** akibat kehilangan pendapatan uang kuliah dan biaya rekrutmen mahasiswa baru yang terus meningkat
+- **Dampak sosial** bagi mahasiswa yang dropout, termasuk hilangnya peluang karir dan beban finansial yang sudah dikeluarkan
+
+Pihak yang paling terdampak adalah **tim akademik dan konselor institusi** yang selama ini tidak memiliki alat bantu untuk mengidentifikasi mahasiswa berisiko secara proaktif. Tanpa sistem deteksi dini, intervensi baru dilakukan setelah mahasiswa sudah mengajukan pengunduran diri, sehingga terlambat untuk dicegah.
+
+Dengan memanfaatkan data historis mahasiswa (performa akademik, faktor finansial, dan demografi), model machine learning dapat digunakan untuk **memprediksi risiko dropout sejak semester awal**, memungkinkan tim akademik memberikan bimbingan khusus kepada mahasiswa berisiko sebelum mereka benar-benar memutuskan untuk keluar.
 
 ## Permasalahan Bisnis
 
-1. **Tingginya Angka Dropout**: Institusi mengalami angka dropout yang signifikan, berdampak pada reputasi, akreditasi, dan keberlanjutan institusi.
-2. **Kurangnya Sistem Deteksi Dini**: Tidak ada mekanisme untuk mengidentifikasi siswa berisiko dropout sebelum mereka benar-benar keluar.
-3. **Kurangnya Pemahaman Faktor Penyebab**: Belum ada analisis mendalam mengenai faktor-faktor utama yang mendorong siswa untuk dropout, sehingga intervensi tidak dapat dilakukan secara tepat sasaran.
+1. **Dropout rate > 30% tanpa mekanisme pencegahan dini**: Dari data historis, lebih dari sepertiga mahasiswa yang memiliki status akhir tidak berhasil menyelesaikan studi. Tim akademik tidak mengetahui siapa yang berisiko hingga mahasiswa tersebut sudah memutuskan dropout, sehingga tidak ada kesempatan untuk intervensi.
+
+2. **Tidak ada pemahaman berbasis data tentang faktor penyebab dropout**: Konselor dan manajemen akademik belum mengetahui faktor-faktor mana (akademik, finansial, atau demografis) yang paling berkontribusi terhadap dropout, sehingga program bantuan yang ada bersifat umum dan tidak tepat sasaran.
+
+3. **Alokasi sumber daya bimbingan yang tidak efisien**: Karena semua mahasiswa diperlakukan sama tanpa segmentasi risiko, sumber daya bimbingan dan beasiswa tidak tersalurkan secara optimal kepada mahasiswa yang paling membutuhkan.
+
+Solusi data science yang dikembangkan bertujuan menjawab pertanyaan bisnis berikut:
+- Faktor apa yang paling berpengaruh terhadap dropout mahasiswa Jaya Jaya Institut?
+- Mahasiswa dengan profil seperti apa yang berisiko tinggi untuk dropout?
+- Bagaimana institusi dapat mengalokasikan intervensi (bimbingan, beasiswa, keringanan biaya) secara lebih tepat sasaran?
 
 ## Cakupan Proyek
 
-1. **Exploratory Data Analysis (EDA)**: Analisis menyeluruh terhadap data siswa untuk memahami distribusi, pola, dan hubungan antar variabel terhadap dropout
-2. **Identifikasi Faktor Dropout**: Menganalisis faktor-faktor paling berpengaruh terhadap keputusan siswa untuk dropout
-3. **Pembangunan Model Prediktif**: Membangun dan mengevaluasi model machine learning untuk memprediksi siswa yang berpotensi dropout
-4. **Business Dashboard**: Membuat dashboard interaktif untuk monitoring faktor-faktor dropout
-5. **Prototype Streamlit**: Membangun aplikasi web untuk prediksi dropout secara real-time
+1. **Exploratory Data Analysis (EDA)**: Analisis distribusi, pola, dan hubungan antar variabel untuk memahami karakteristik mahasiswa dropout vs graduate
+2. **Identifikasi Faktor Dropout**: Analisis statistik dan feature importance untuk menemukan faktor-faktor utama penyebab dropout
+3. **Pembangunan Model Prediktif**: Membangun, membandingkan, dan mengevaluasi 3 model machine learning (Logistic Regression, Random Forest, Gradient Boosting) untuk prediksi risiko dropout
+4. **Business Dashboard Interaktif**: Membuat dashboard dengan fitur filter dinamis (berdasarkan gender, status beasiswa, status pembayaran, kelompok usia) untuk membantu tim akademik memonitor dan mengeksplorasi data mahasiswa
+5. **Prototype Streamlit**: Aplikasi web yang memungkinkan konselor memasukkan data mahasiswa baru dan mendapatkan prediksi risiko dropout secara real-time beserta rekomendasi intervensi
 
 ## Persiapan
 
@@ -59,9 +73,6 @@ streamlit run app.py
 Dashboard telah dibuat menggunakan **Looker Studio (Google Data Studio)** untuk memvisualisasikan faktor-faktor yang mempengaruhi dropout siswa di Jaya Jaya Institut.
 
 **Link Dashboard**: [Jaya Jaya Institut Student Dropout Dashboard](https://datastudio.google.com/u/0/reporting/125244c1-3ae4-4b65-ab1a-8348e640c903/page/ezX9F)
-
-**Email Metabase**: root@mail.com
-**Password Metabase**: root123
 
 Dashboard menampilkan:
 - **Overview Panel**: Dropout rate keseluruhan, jumlah siswa aktif, dropout, dan lulus
